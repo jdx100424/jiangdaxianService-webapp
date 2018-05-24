@@ -15,8 +15,8 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>jiangdaxian_component_common</groupId>
-			<artifactId>jiangdaxian_component_common</artifactId>
+			<groupId>jiangdaxian_component_mybatis</groupId>
+			<artifactId>jiangdaxian_component_mybatis</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 	</dependencies>

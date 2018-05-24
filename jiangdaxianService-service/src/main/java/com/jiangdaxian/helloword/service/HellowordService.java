@@ -18,6 +18,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import com.jiangdaxian.mongodb.MongoBeanUtil;
+import com.jiangdaxian.redis.RedisLock;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBCursor;
@@ -32,6 +33,9 @@ public class HellowordService {
 
 	@Autowired
 	private JdxTestDao jdxTestDao;
+	
+	@Autowired
+	private RedisLock redisLock;
 
 	public String sayHello() {
 		String str = JSONObject.toJSONString(jdxTestDao.selectById(1L));
@@ -78,5 +82,17 @@ public class HellowordService {
 	}
 	public JdxTestMongo getInRedis(String name) {
 		return (JdxTestMongo) redisTemplate.opsForValue().get(name);
+	}
+	
+	public void redisLock(String s) {
+		try {
+			redisLock.lockByIncr(s);
+			Thread.sleep(2000);
+			System.out.println(new java.util.Date() + ","+ Thread.currentThread().getName());
+		}catch(Exception e) {
+			LOG.error(e.getMessage(),e);
+		}finally {
+			redisLock.unlock(s);
+		}
 	}
 }

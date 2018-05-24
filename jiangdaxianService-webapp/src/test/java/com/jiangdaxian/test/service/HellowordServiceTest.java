@@ -18,12 +18,12 @@ public class HellowordServiceTest extends BaseTestCase {
 	private JdxTestDao jdxTestDao;
 	@Autowired
 	private HellowordService hellowordService;
-	
+
 	@Test
 	public void testSayHello() {
-		System.out.println("jdx:"+hellowordService.sayHello());
+		System.out.println("jdx:" + hellowordService.sayHello());
 	}
-	
+
 	@Test
 	public void testJdxTestDao() {
 		try {
@@ -34,8 +34,7 @@ public class HellowordServiceTest extends BaseTestCase {
 			throw e;
 		}
 	}
-	
-	
+
 	@Test
 	public void testMongoSaveAndSelect() throws Exception {
 		JdxTestMongo jdxTestMongo = new JdxTestMongo();
@@ -46,11 +45,24 @@ public class HellowordServiceTest extends BaseTestCase {
 		List<JdxTestMongo> list = hellowordService.getItemInfoInMongo(20000L);
 		System.out.println("list:" + JSONObject.toJSONString(list));
 	}
-	
+
 	@Test
 	public void testRedis() throws Exception {
 		List<JdxTestMongo> list = hellowordService.getItemInfoInMongo(20000L);
-		hellowordService.saveInRedis("jdx",list.get(0));
+		hellowordService.saveInRedis("jdx", list.get(0));
 		System.out.println(JSONObject.toJSONString(hellowordService.getInRedis("jdx")));
 	}
+
+	@Test
+	public void testRedisLock() throws Exception {
+		for (int i = 0; i < 3; i++) {
+			new Thread(new Runnable() {
+				public void run() {
+					hellowordService.redisLock("jdx");
+				}
+			}).start();
+		}
+		Thread.sleep(15000);
+	}
+
 }

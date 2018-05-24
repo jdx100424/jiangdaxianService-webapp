@@ -15,6 +15,8 @@ import com.jiangdaxian.jdxtest.entity.JdxTestEntity;
 import com.jiangdaxian.jdxtest.mongo.JdxTestMongo;
 
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.RedisTemplate;
+
 import com.jiangdaxian.mongodb.MongoBeanUtil;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
@@ -41,7 +43,7 @@ public class HellowordService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	
-	public List<JdxTestMongo> getItemInfo(Long id) throws Exception {
+	public List<JdxTestMongo> getItemInfoInMongo(Long id) throws Exception {
 		List<JdxTestMongo> list = new ArrayList<JdxTestMongo>();
 		// 判断查询的json中传递过来的参数
 		DBObject query = new BasicDBObject();
@@ -59,7 +61,7 @@ public class HellowordService {
 		return list;
 	}
 
-	public int save(JdxTestMongo itemInfo) throws Exception {
+	public int saveInMongo(JdxTestMongo itemInfo) throws Exception {
 		DBCollection collection = this.mongoTemplate.getCollection(COLLECTION_NAME);
 		int result = 0;
 		DBObject iteminfoObj = MongoBeanUtil.bean2DBObject(itemInfo);
@@ -68,5 +70,13 @@ public class HellowordService {
 		return result;
 	}
 	
-
+	@Autowired
+	private RedisTemplate redisTemplate;
+	
+	public void saveInRedis(String name ,JdxTestMongo itemInfo) {
+		redisTemplate.opsForValue().set(name, itemInfo);
+	}
+	public JdxTestMongo getInRedis(String name) {
+		return (JdxTestMongo) redisTemplate.opsForValue().get(name);
+	}
 }

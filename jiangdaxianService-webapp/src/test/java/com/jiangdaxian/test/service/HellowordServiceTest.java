@@ -41,9 +41,16 @@ public class HellowordServiceTest extends BaseTestCase {
 		JdxTestMongo jdxTestMongo = new JdxTestMongo();
 		jdxTestMongo.setId(20000L);
 		jdxTestMongo.setName("20000name");
-		int i = hellowordService.save(jdxTestMongo);
+		int i = hellowordService.saveInMongo(jdxTestMongo);
 		System.out.println("save:" + i);
-		List<JdxTestMongo> list = hellowordService.getItemInfo(20000L);
+		List<JdxTestMongo> list = hellowordService.getItemInfoInMongo(20000L);
 		System.out.println("list:" + JSONObject.toJSONString(list));
+	}
+	
+	@Test
+	public void testRedis() throws Exception {
+		List<JdxTestMongo> list = hellowordService.getItemInfoInMongo(20000L);
+		hellowordService.saveInRedis("jdx",list.get(0));
+		System.out.println(JSONObject.toJSONString(hellowordService.getInRedis("jdx")));
 	}
 }

@@ -4,6 +4,7 @@
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
 	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:task="http://www.springframework.org/schema/task" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
@@ -11,26 +12,16 @@
 		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
-        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd" 
-        >
-    
-	<context:component-scan base-package="com.jiangdaxian" />
-    <context:annotation-config />
-    
- 	<import resource="dubboContext.xml" />
- 	<import resource="sqlContext.xml" />
-	<import resource="redisContext.xml" />
- 	<import resource="mongoContext.xml" />
- 	<import resource="kafkaContext.xml" />
-
-	<bean name="propertiesHolder" class="com.jiangdaxian.common.util.properties.CustomizedPropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="fileEncoding" value="utf-8" />
-		<property name="locations">
-			<list>
-				<value>classpath*:/properties/*.properties</value>
-			</list>
-		</property>
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	
+	<bean id="hellowordConsumer" class="com.jiangdaxian.helloword.kakfa.HellowordConsumer">
+		<constructor-arg name="topicName" value="${kafka.topicName}" />
+		<constructor-arg name="groupId" value="${kafka.groupId}" />
+		<constructor-arg name="kafkaIp" value="${kafka.ip}" />
+		<constructor-arg name="kafkaPort" value="${kafka.port}" />
+		<constructor-arg name="kafkaServer" value="${kafka.server}" />
 	</bean>
 </beans>
+
+

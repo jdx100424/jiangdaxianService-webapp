@@ -1,0 +1,1 @@
+baseInfoContextFilter=com.jiangdaxian.common.dubbo.filter.BaseInfoContextFilter

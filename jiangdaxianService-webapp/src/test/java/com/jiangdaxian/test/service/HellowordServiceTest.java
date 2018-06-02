@@ -20,6 +20,11 @@ public class HellowordServiceTest extends BaseTestCase {
 	private HellowordService hellowordService;
 
 	@Test
+	public void testSelectElasticsearch() {
+		hellowordService.selectElasticsearch();
+	}
+	
+	@Test
 	public void testSayHello() {
 		System.out.println("jdx:" + hellowordService.sayHello());
 	}

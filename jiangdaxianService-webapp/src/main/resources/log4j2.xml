@@ -19,19 +19,17 @@
 		</RollingRandomAccessFile>
 		<Async includeLocation="true" name="ASYNC">
 			<AppenderRef ref="Console" />
-		</Async>
-		<Async includeLocation="true" name="ASYNC2">
 			<AppenderRef ref="RollingFile" />
 		</Async>
 	</Appenders>
 
 	<Loggers>
 		<Root level="info">
-			<AppenderRef ref="Console" />
+			<AppenderRef ref="ASYNC" />
 		</Root>
 
 		<logger additivity="false" level="info" name="com.jiangdaxian">
-			<appender-ref ref="ASYNC2" />
+			<appender-ref ref="ASYNC" />
 		</logger>
 	</Loggers>
 </Configuration>

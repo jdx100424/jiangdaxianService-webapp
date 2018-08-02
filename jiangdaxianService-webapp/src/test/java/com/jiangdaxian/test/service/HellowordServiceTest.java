@@ -10,6 +10,7 @@ import com.jiangdaxian.helloword.service.HellowordService;
 import com.jiangdaxian.jdxtest.dao.JdxTestDao;
 import com.jiangdaxian.jdxtest.entity.JdxTestEntity;
 import com.jiangdaxian.jdxtest.mongo.JdxTestMongo;
+import com.jiangdaxian.mybatis.masterandslave.MasterAndSlaveDataSourceHolder;
 import com.jiangdaxian.test.BaseTestCase;
 
 public class HellowordServiceTest extends BaseTestCase {
@@ -33,6 +34,13 @@ public class HellowordServiceTest extends BaseTestCase {
 	public void testJdxTestDao() {
 		try {
 			JdxTestEntity jdxTestEntity = jdxTestDao.selectById(1L);
+			System.out.println(JSONObject.toJSONString(jdxTestEntity));
+			
+			MasterAndSlaveDataSourceHolder.putDataSourceMaster();
+			jdxTestEntity = jdxTestDao.selectById(1L);
+			System.out.println(JSONObject.toJSONString(jdxTestEntity));
+			
+			jdxTestEntity = jdxTestDao.selectById(1L);
 			System.out.println(JSONObject.toJSONString(jdxTestEntity));
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,20 +23,43 @@
 		<property name="maxActive" value="100" />  
 		<property name="initialSize" value="10" />  
 	</bean>
+	<bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close"> 
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://${mysql.slave.ip}:${mysql.slave.port}/jdxTestSlave" />
+		<property name="username" value="${mysql.slave.username}" />
+		<property name="password" value="${mysql.slave.password}" />
+		<property name="maxActive" value="100" />  
+		<property name="initialSize" value="10" />  
+	</bean>
+	<bean id="mainDataSource" class="com.jiangdaxian.mybatis.masterandslave.MasterAndSlaveDataSource">
+		<property name="targetDataSources">
+			<map key-type="java.lang.String">
+				<entry key="master" value-ref="masterDataSource" />
+				<entry key="slave" value-ref="slaveDataSource" />
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="masterDataSource" />
+	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage" value="com.jiangdaxian.**.dao" />
 		<property name="sqlSessionFactoryBeanName" value="myBatisSqlSessionFactory" />
 		<property name="annotationClass" value="org.springframework.stereotype.Repository" />
 	</bean>
-
+	<bean id="masterAndSlaveDataSourceInterceptor" class="com.jiangdaxian.mybatis.masterandslave.MasterAndSlaveDataSourceInterceptor">  
+    </bean> 
 	<bean id="myBatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="masterDataSource" />
+		<property name="dataSource" ref="mainDataSource" />
 		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+		<property name="plugins">
+			<list>
+				<ref bean="masterAndSlaveDataSourceInterceptor" />
+			</list>
+		</property>
 	</bean>
 
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="masterDataSource"/>
+        <property name="dataSource" ref="mainDataSource"/>
     </bean>
 	<!-- 配置 Annotation 驱动，扫描@Transactional注解的类定义事务  -->
 	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>

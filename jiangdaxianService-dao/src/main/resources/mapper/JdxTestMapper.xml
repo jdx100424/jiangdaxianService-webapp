@@ -10,6 +10,11 @@
 		select id,name from jdx_test where
 		id=#{id,jdbcType=BIGINT};
 	</select>
+	
+	<select id="selectByIdList" resultMap="jdxTestResult" parameterType="map">
+		select id,name from jdx_test where
+		id=#{id,jdbcType=BIGINT};
+	</select>
 
 	<insert id="insert" parameterType="com.jiangdaxian.jdxtest.entity.JdxTestEntity"
 		useGeneratedKeys="true" keyProperty="id">

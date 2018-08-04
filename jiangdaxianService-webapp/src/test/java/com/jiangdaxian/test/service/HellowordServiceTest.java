@@ -11,6 +11,7 @@ import com.jiangdaxian.jdxtest.dao.JdxTestDao;
 import com.jiangdaxian.jdxtest.entity.JdxTestEntity;
 import com.jiangdaxian.jdxtest.mongo.JdxTestMongo;
 import com.jiangdaxian.mybatis.masterandslave.MasterAndSlaveDataSourceHolder;
+import com.jiangdaxian.mybatis.pagelimit.PageLimitBounds;
 import com.jiangdaxian.test.BaseTestCase;
 
 public class HellowordServiceTest extends BaseTestCase {
@@ -30,6 +31,24 @@ public class HellowordServiceTest extends BaseTestCase {
 		System.out.println("jdx:" + hellowordService.sayHello());
 	}
 
+	@Test
+	public void testJdxTestDaoLimit() {
+		try {
+			PageLimitBounds p = new PageLimitBounds();
+			MasterAndSlaveDataSourceHolder.putDataSourceMaster();
+			List<JdxTestEntity> list = jdxTestDao.selectByIdList(1L,p);
+			System.out.println(JSONObject.toJSONString(list));
+			
+			p = new PageLimitBounds(2,2);
+			MasterAndSlaveDataSourceHolder.putDataSourceMaster();
+			list = jdxTestDao.selectByIdList(1L,p);
+			System.out.println(JSONObject.toJSONString(list));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
+	
 	@Test
 	public void testJdxTestDao() {
 		try {

@@ -48,11 +48,14 @@
 	</bean>
 	<bean id="masterAndSlaveDataSourceInterceptor" class="com.jiangdaxian.mybatis.masterandslave.MasterAndSlaveDataSourceInterceptor">  
     </bean> 
+    <bean id="pageLimitInterceptor" class="com.jiangdaxian.mybatis.pagelimit.PageLimitInterceptor">  
+    </bean> 
 	<bean id="myBatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mainDataSource" />
 		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
 		<property name="plugins">
 			<list>
+				<ref bean="pageLimitInterceptor" />
 				<ref bean="masterAndSlaveDataSourceInterceptor" />
 			</list>
 		</property>

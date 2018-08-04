@@ -12,4 +12,5 @@ import com.jiangdaxian.mybatis.pagelimit.PageLimitBounds;
 public interface JdxTestDao {
 	public JdxTestEntity selectById(@Param("id")Long id);
 	public List<JdxTestEntity> selectByIdList(@Param("id")Long id,PageLimitBounds pageLimitBounds);
+	public List<JdxTestEntity> selectAll(PageLimitBounds pageLimitBounds);
 }

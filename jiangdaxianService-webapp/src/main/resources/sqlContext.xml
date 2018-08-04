@@ -50,11 +50,15 @@
     </bean> 
     <bean id="pageLimitInterceptor" class="com.jiangdaxian.mybatis.pagelimit.PageLimitInterceptor">  
     </bean> 
+    <bean id="pageCountInterceptor" class="com.jiangdaxian.mybatis.pagelimit.PageCountInterceptor">  
+    </bean> 
 	<bean id="myBatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="mainDataSource" />
 		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
 		<property name="plugins">
 			<list>
+				<!-- 相同的拦截位置，后面的会优先运行 -->
+				<ref bean="pageCountInterceptor" />
 				<ref bean="pageLimitInterceptor" />
 				<ref bean="masterAndSlaveDataSourceInterceptor" />
 			</list>

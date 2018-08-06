@@ -23,6 +23,12 @@ public class HellowordServiceTest extends BaseTestCase {
 	private HellowordService hellowordService;
 
 	@Test
+	public void testAop() {
+		String s = hellowordService.sayHello();
+		System.out.println(s);
+	}
+	
+	@Test
 	public void testSelectElasticsearch() {
 		hellowordService.selectElasticsearch();
 	}

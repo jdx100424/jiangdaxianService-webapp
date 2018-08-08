@@ -25,14 +25,28 @@
 
  	<import resource="elasticsearchContext.xml"/>
 
-	<bean name="propertiesHolder" class="com.jiangdaxian.common.util.properties.CustomizedPropertyPlaceholderConfigurer">
-		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
-		<property name="ignoreResourceNotFound" value="true" />
-		<property name="fileEncoding" value="utf-8" />
-		<property name="locations">
-			<list>
-				<value>classpath*:/properties/*.properties</value>
-			</list>
-		</property>
-	</bean>
+	<beans profile="online">
+		<bean name="propertiesHolder" class="com.jiangdaxian.common.util.properties.CustomizedPropertyPlaceholderConfigurer">
+			<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+			<property name="ignoreResourceNotFound" value="true" />
+			<property name="fileEncoding" value="utf-8" />
+			<property name="locations">
+				<list>
+					<value>classpath*:/properties/online/*.properties</value>
+				</list>
+			</property>
+		</bean>
+	</beans>
+	<beans profile="test">
+		<bean name="propertiesHolder" class="com.jiangdaxian.common.util.properties.CustomizedPropertyPlaceholderConfigurer">
+			<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" />
+			<property name="ignoreResourceNotFound" value="true" />
+			<property name="fileEncoding" value="utf-8" />
+			<property name="locations">
+				<list>
+					<value>classpath*:/properties/test/*.properties</value>
+				</list>
+			</property>
+		</bean>
+	</beans>
 </beans>

@@ -58,6 +58,15 @@ public class HellowordService {
 
 	public static final String ELA_INDEX_NAME = "ela_index_name_select";
 	public static final String ELA_TYPE_NAME = "ela_type_name";
+	
+	public void testRedisCluster() throws Exception {
+		for(int i=100;i<110;i++) {
+			String jdx = Integer.toString(i);
+			redisLock.set(jdx, Integer.valueOf(i));
+			Integer result = redisLock.get(jdx,Integer.class);
+			System.out.println(result!=null?result:"null没有数据");
+		}
+	}
 
 	public void selectElasticsearch() {
 		System.out.println(client);

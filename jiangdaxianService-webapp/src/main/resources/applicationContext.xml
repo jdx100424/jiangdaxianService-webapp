@@ -19,9 +19,14 @@
     
  	<import resource="dubboContext.xml" />
  	<import resource="sqlContext.xml" />
-	<import resource="redisContext.xml" />
+ 	<!-- 
+ 	<import resource="redisContext.xml" />
+ 	 -->
+	<import resource="redisClusterContext.xml" />
 	
 	<import resource="mongoContext.xml" />
+	<!-- 
+	<import resource="kafkaContext.xml" />-->
 
  	<import resource="elasticsearchContext.xml"/>
 

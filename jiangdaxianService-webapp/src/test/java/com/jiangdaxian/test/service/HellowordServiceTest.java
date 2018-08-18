@@ -23,6 +23,11 @@ public class HellowordServiceTest extends BaseTestCase {
 	private HellowordService hellowordService;
 
 	@Test
+	public void testRedisCluster() throws Exception {
+		hellowordService.testRedisCluster();
+	}
+	
+	@Test
 	public void testAop() {
 		String s = hellowordService.sayHello();
 		System.out.println(s);

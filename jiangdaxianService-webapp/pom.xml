@@ -4,19 +4,18 @@
 	<parent>
 		<groupId>jiangdaxianService</groupId>
 		<artifactId>jiangdaxianService</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>jiangdaxianService-webapp</groupId>
 	<artifactId>jiangdaxianService-webapp</artifactId>
-	<packaging>war</packaging>
 	
 	<dependencies>
 		<dependency>
 			<groupId>jiangdaxianService-service</groupId>
 			<artifactId>jiangdaxianService-service</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>1.0.0-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
 

@@ -19,16 +19,15 @@
     
  	<import resource="dubboContext.xml" />
  	<import resource="sqlContext.xml" />
- 	<!-- 
  	<import resource="redisContext.xml" />
- 	 -->
-	<import resource="redisClusterContext.xml" />
+	<!--  
+	<import resource="redisClusterContext.xml" />-->
 	
 	<import resource="mongoContext.xml" />
 	<!-- 
 	<import resource="kafkaContext.xml" />-->
-
- 	<import resource="elasticsearchContext.xml"/>
+	<!--  
+ 	<import resource="elasticsearchContext.xml"/>-->
 
 	<beans profile="online">
 		<bean name="propertiesHolder" class="com.jiangdaxian.common.util.properties.CustomizedPropertyPlaceholderConfigurer">
